@@ -65,10 +65,13 @@ p {
 .navbar {
   width: 100%;
   background-color:black;
+  height: 40px;
+  display: flex;
+  align-items: center;
 }
 
-_nav {
-  width: 30%; /* items closeby and centered */
+.navbar li:hover {
+background-color: #00aa00ab;
 }
 
 nav ul {
