@@ -48,8 +48,10 @@ h1 {
   margin-bottom: 2.5vh;
 }
 
-h2 {
+.terminal {
   color: var(--text-color);
+  max-width: 100%;
+  word-break: break-all;
 }
 
 h4 {
