@@ -1,4 +1,4 @@
-const WINBOX_WIDTH = '80%'
+const WINBOX_WIDTH = '90%'
 const WINBOX_HEIGHT = '90%'
 
 function winboxOptions(title, mountContentId, onResize) {
@@ -31,7 +31,11 @@ function winboxOptions(title, mountContentId, onResize) {
 }
 
 function updateWinboxSize() {
-    window.winbox?.resize(WINBOX_WIDTH, WINBOX_HEIGHT)
+    const resize = () => {
+        window.winbox?.resize(WINBOX_WIDTH, WINBOX_HEIGHT)
+        window.winbox?.move("center", "center")
+    }
+    setTimeout(resize, 1000)
 }
 
 export { winboxOptions, updateWinboxSize }
