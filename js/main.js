@@ -1,8 +1,8 @@
 import { renderTable } from './cli-table.js'
 import { updateWinboxSize, winboxOptions } from './winbox-options.js'
-
 import { workExperienceData } from '../content/work-experience.js'
 import { educationData } from '../content/education.js'
+import { contactDetailsData } from '../content/contact-details.js'
 
 function closeWinboxOnClickOutside(evt) {
   if (evt?.target?.classList?.contains('winbox') && evt?.target?.classList?.contains('modal')) {
@@ -26,6 +26,7 @@ document.querySelector('#resume').addEventListener('click', () => {
 document.querySelector('#contact').addEventListener('click', () => {
   let contactBox = new WinBox(winboxOptions('', '#contact-content'))
   window.winbox = contactBox
+  renderTable('#outputContactDetails', contactDetailsData)
 })
 
 window.addEventListener('resize', () => {

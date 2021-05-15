@@ -85,13 +85,17 @@ function renderTable(targetId, data) {
             // center first row
             if (rowIndex === 0) return { align: 'center' }
 
-            // row height is the number of available lines. We calculate row height dynamically based on content
-            const lines = data[rowIndex][2]
-            // actualWidth seems to be lower by 2 than what is set
-            const actualWidth = lastColumnMaxChars - 2
-            // use same function for calculating neededHeight wich is used to break lines
-            const neededHeight = breakLines(lines, actualWidth).length
-            return { height: neededHeight }
+            // row height is the number of available lines. We calculate row height dynamically based on content. We only want to change height for work experience and education data, which has 3 columns
+            if (data[rowIndex].length === 3) {
+                const lastRowIndex = data[rowIndex].length - 1
+                const lines = data[rowIndex][lastRowIndex]
+                // actualWidth seems to be lower by 2 than what is set
+                const actualWidth = lastColumnMaxChars - 2
+                // use same function for calculating neededHeight wich is used to break lines
+                const neededHeight = breakLines(lines, actualWidth).length
+                console.log(neededHeight, actualWidth)
+                return { height: neededHeight }
+            }
         },
         columns: { // column level styles
             0: { // first column

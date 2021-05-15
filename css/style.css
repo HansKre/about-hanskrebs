@@ -39,7 +39,7 @@ body {
 @media screen and (max-width: 767px) {
   :root {font-size: 4.5vmin;}
   .navbar {width: min(100%,80vw);}
-  #outputWorkExp, #outputEdu {font-size: 2.5vmin;}
+  #outputWorkExp, #outputEdu, #outputContactDetails {font-size: 2.5vmin;}
 }
 
 h1 {

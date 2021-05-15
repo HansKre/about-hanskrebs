@@ -1,6 +1,6 @@
 const educationData = [
     ['from', 'to', 'what'],
-    ['something', 'to come', 'soon lsfjlsdkjf lsdkfjsldkfj lsdkfjsdlkfjlk lksjdflksjd ']
+    ['something', 'to come', 'really really soon']
 ]
 
 export { educationData }
