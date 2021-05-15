@@ -1,10 +1,19 @@
 # Description
 
-todo
+This is the repo for my about-me page which you can checkout here: [www.hanskrebs.me](https://hanskrebs.me)
 
-## Table-Sources
+## Development
 
-fav:
+```bash
+git clone git@github.com:HansKre/about-hanskrebs.git
+cd about-hanskrebs
+serve -s .
+```
+
+## Resources 
+
+### Table-Packages
+
 https://www.npmjs.com/package/styled-cli-table
 
 https://www.npmjs.com/package/word-table
@@ -25,20 +34,3 @@ https://twilio-cms-prod.s3.amazonaws.com/images/u5MuIPdJJuGBw4z_ZxBrN8G0GAH09MYv
 https://www.twilio.com/blog/building-conference-cli-in-react
 
 https://github.com/twilio-labs/plugin-signal2020
-
-## Portfolio Inspiration
-
-https://resume.tiffanyrwhite.com
-
-
-## Winbox
-
-https://nextapps-de.github.io/winbox/
-
-https://morioh.com/p/5fd2aa8bc7be
-
-https://github.com/bradtraversy/terminal-landing-page
-
-## fluid typography
-
-https://css-tricks.com/snippets/css/fluid-typography/
