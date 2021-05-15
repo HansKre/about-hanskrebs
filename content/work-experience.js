@@ -4,9 +4,4 @@ const workExperienceData = [
     ['01.10.2016', '31.12.2019', ['Solutions Architect at Daimler AG', '', 'Design and architecture new Daimler applications, team\'s responsibile for architecture & tech']]
 ];
 
-const educationData = [
-    ['from', 'to', 'what'],
-    ['something', 'to come', 'soon']
-]
-
-export { workExperienceData, educationData }
+export { workExperienceData }
