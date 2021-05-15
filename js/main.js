@@ -44,8 +44,8 @@ resume.addEventListener('click', () => {
     onblur: function () {
       this.setBackground('#777')
     },
-    onresize: function (width, height) {
-      console.log({ width, height })
+    onresize: function () {
+      renderTable()
     }
   })
   window.winbox = resumeBox
@@ -80,10 +80,20 @@ contact.addEventListener('click', () => {
 
 /* ------- styled-cli-table ------- */
 
+
+const minChars = 10
+const style = window.getComputedStyle(document.getElementById('outputWorkExp'), null).fontSize;
+const fontSize = parseFloat(style)
+const availableWidth = window.winbox?.width - (2 * minChars * fontSize) || 0
+const availableMaxChars = (availableWidth / fontSize).toFixed(0)
+const lastColumnMaxChars = Math.max(minChars * 1.5, availableMaxChars)
+// console.log('fontsize', fontSize, 'availableMaxChars', lastColumnMaxChars, 'viewPort', window.visualViewport.width, 'ratio', window.visualViewport.width / availableMaxChars)
+
 function PrettyCropRenderer(BufferedRenderer) {
   return class extends BufferedRenderer {
     // extend & override
     fillBlock(buffer, x, y, content, width, height, cell, computedStyles) {
+      // console.log('available height', height, 'req. height', breakLines(content, width).length, 'width', width, 'lastColMaxChars', lastColumnMaxChars)
       super.fillBlock(buffer, x, y, breakLines(content, width), width, height + 5, cell, computedStyles)
     }
     // extend & override
@@ -97,7 +107,6 @@ function breakLines(content, width) {
   const newContent = []
   for (const line of content) {
     if (line.length <= width) {
-      console.log('pushing', line)
       newContent.push(line)
     } else {
       let substring = ''
@@ -109,13 +118,10 @@ function breakLines(content, width) {
       } while (substring)
     }
   }
-  // console.table([...content, ...newContent])
-  console.table(newContent)
   return newContent
 }
 
 function crop(content, width, cropString = '') {
-  console.log('maxChars', width, 'viewPort', window.visualViewport.width)
   return content.length > width ?
     content.substring(0, width - cropString.length) + cropString :
     content;
@@ -141,43 +147,35 @@ function renderTable() {
     ['01.10.2016', '31.12.2019', ['Solutions Architect at Daimler AG', '', 'Design and architecture new Daimler applications, team\'s responsibile for architecture & tech']]
   ];
 
-  const proportionalParentWidth = (window.winbox?.width / 23).toFixed(0)
-  const minWidth = 10
-
   const styles = {
     // table level styles
     ...border(true),
     crop: '..',
     borderCharacters: singleWithPlus,
     paddingLeft: 1, paddingRight: 1,
-    // rows: { // row level styles
-    //   0: {
-    //     align: 'center'
-    //   }
-    // },
     rows({ rowIndex, data }) { // functional row styles
-      if (rowIndex === 0) return { align: 'center' } // center first row
+      // center first row
+      if (rowIndex === 0) return { align: 'center' }
 
+      // row height is the number of available lines. We calculate row height dynamically based on content
       const lines = data[rowIndex][2]
-      let neededHeight = 0
-      for (const line of lines) {
-        // at least one height for each line, even if empty
-        neededHeight += Math.max(Math.ceil(line.length / proportionalParentWidth), 1)
-      }
-      console.log({ neededHeight })
+      // actualWidth seems to be lower by 2 than what is set
+      const actualWidth = lastColumnMaxChars - 2
+      // use same function for calculating neededHeight wich is used to break lines
+      const neededHeight = breakLines(lines, actualWidth).length
       return { height: neededHeight }
     },
     columns: { // column level styles
       0: { // first column
-        minWidth: minWidth
+        minWidth: minChars
       },
       1: {
-        minWidth: minWidth
+        minWidth: minChars
       },
       [-1]: { // last column
-        minWidth: Math.max(minWidth * 1.5, proportionalParentWidth),
-        width: Math.max(minWidth * 1.5, proportionalParentWidth),
-        maxWidth: Math.max(minWidth * 1.5, proportionalParentWidth),
+        minWidth: lastColumnMaxChars,
+        width: lastColumnMaxChars,
+        maxWidth: lastColumnMaxChars,
       }
     }
   };
@@ -204,11 +202,10 @@ function renderTable() {
     outputWorkExp.appendChild(document.createElement('br'));
     outputEdu.appendChild(document.createTextNode(line));
     outputEdu.appendChild(document.createElement('br'));
-    // console.log(line); // echoing
   }
 }
 
 window.addEventListener('resize', () => {
+  console.log(window.visualViewport.width, window.visualViewport.height)
   window.winbox?.resize(WINBOX_WIDTH, WINBOX_HEIGHT)
-  renderTable()
 })

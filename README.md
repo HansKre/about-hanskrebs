@@ -38,3 +38,7 @@ https://nextapps-de.github.io/winbox/
 https://morioh.com/p/5fd2aa8bc7be
 
 https://github.com/bradtraversy/terminal-landing-page
+
+## fluid typography
+
+https://css-tricks.com/snippets/css/fluid-typography/

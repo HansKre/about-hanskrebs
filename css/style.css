@@ -14,7 +14,6 @@ body {
   font-family: 'Roboto Mono', sans-serif;
   background-color: #333;
   color: #ccc;
-  font-size: 18px;
   line-height: 1.6;
 }
 
@@ -22,12 +21,31 @@ body {
   font-family: 'Roboto Mono', sans-serif !important;
 }
 
+/* desktop */
+@media screen and (min-width: 1024px) {
+  :root {font-size: 3vmin;}
+  h1 {letter-spacing: -3px;}
+  .navbar {width: min(600px, 60vw);}
+}
+
+/* tablet */
+@media screen and (min-width:768px) and (max-width: 1023px) {
+  :root {font-size: 3vmin;}
+  h1 {letter-spacing: -3px;}
+  .navbar {width: min(100%,80vw);}
+}
+
+/* phone */
+@media screen and (max-width: 767px) {
+  :root {font-size: 4.5vmin;}
+  .navbar {width: min(100%,80vw);}
+  #outputWorkExp {font-size: 2.5vmin;}
+}
+
 h1 {
   color: var(--text-color);
-  font-size: 50px;
-  letter-spacing: -5px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 2.5vh;
+  margin-bottom: 2.5vh;
 }
 
 h2 {
@@ -39,7 +57,7 @@ h4 {
 }
 
 h4 p {
-  margin: 20px 0
+  margin: 2.5vh 0
 }
 
 h4 p span {
@@ -48,6 +66,9 @@ h4 p span {
 
 ul {
   list-style-type: none;
+}
+
+.footer ul {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -59,11 +80,10 @@ a {
 }
 
 p {
-  margin: 20px 0;
+  margin: 2.5vh 0;
 }
 
 .navbar {
-  width: 100%;
   background-color:black;
   height: 40px;
   display: flex;
@@ -90,8 +110,8 @@ nav ul li:nth-child(2) {
 }
 
 .container {
-  max-width: min(600px, 60vw);
-  margin: auto;
+  max-width: min(600px, 80vw);
+  margin: 40px auto auto auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,10 +143,22 @@ nav ul li:nth-child(2) {
   }
 }
 
-#resume-content {
+#resume-content, #contact-content {
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#outputWorkExp {
+  max-width: 100%;
+}
+
+.footer {
+  margin-bottom: 5vh;
+}
+
+main {
+  /* width: 100% */
 }
