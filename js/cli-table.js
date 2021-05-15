@@ -5,14 +5,15 @@ import { PrintLineBuffer } from 'https://unpkg.com/styled-cli-table/module/print
 import { BorderRenderer, PaddingRenderer, AlignRenderer, FlexSizeRenderer, GenericBufferedRenderer } from 'https://unpkg.com/styled-cli-table/module/renderers/index.js';
 import { ComposableRenderedStyledTable } from 'https://unpkg.com/styled-cli-table/module/composable/ComposableRenderedStyledTable.js';
 
+const COLUMN_MIN_CHARS = 10
+
 function renderTable(targetId, data) {
-    const minChars = 10
-    const style = window.getComputedStyle(document.querySelector(targetId), null).fontSize;
-    const fontSize = parseFloat(style)
-    const availableWidth = window.winbox?.width - (2 * minChars * fontSize) || 0
-    const availableMaxChars = (availableWidth / fontSize).toFixed(0)
-    const lastColumnMaxChars = Math.max(minChars * 1.5, availableMaxChars)
-    // console.log('fontsize', fontSize, 'availableMaxChars', lastColumnMaxChars, 'viewPort', window.visualViewport.width, 'ratio', window.visualViewport.width / availableMaxChars)
+    const fontSizeStyle = window.getComputedStyle(document.querySelector(targetId), null).fontSize;
+    const fontSize = parseFloat(fontSizeStyle)
+    const availableWidthLastCol = window.winbox?.width - (2 * COLUMN_MIN_CHARS * fontSize) || 0
+    const availableMaxChars = (availableWidthLastCol / fontSize).toFixed(0)
+    const lastColumnMaxChars = Math.max(COLUMN_MIN_CHARS, availableMaxChars)
+    console.log('fontsize', fontSize, 'availableMaxChars', lastColumnMaxChars, 'winbox.width', window.winbox?.width, 'ratio', window.winbox?.width / availableMaxChars)
 
     function PrettyCropRenderer(BufferedRenderer) {
         return class extends BufferedRenderer {
@@ -28,20 +29,29 @@ function renderTable(targetId, data) {
         };
     }
 
+    function breakLine(line, width, newContent) {
+        if (line.length <= width) {
+            newContent.push(line);
+        } else {
+            let substring = '';
+            let cursor = 0;
+            do {
+                substring = line.substring(cursor, cursor + width);
+                if (substring)
+                    newContent.push(substring.trim());
+                cursor += width;
+            } while (substring);
+        }
+    }
+
     function breakLines(content, width) {
         const newContent = []
-        for (const line of content) {
-            if (line.length <= width) {
-                newContent.push(line)
-            } else {
-                let substring = ''
-                let cursor = 0
-                do {
-                    substring = line.substring(cursor, cursor + width)
-                    if (substring) newContent.push(substring.trim())
-                    cursor += width
-                } while (substring)
+        if (Array.isArray(content)) {
+            for (const line of content) {
+                breakLine(line, width, newContent);
             }
+        } else {
+            breakLine(content, width, newContent);
         }
         return newContent
     }
@@ -85,10 +95,10 @@ function renderTable(targetId, data) {
         },
         columns: { // column level styles
             0: { // first column
-                minWidth: minChars
+                minWidth: COLUMN_MIN_CHARS
             },
             1: {
-                minWidth: minChars
+                minWidth: COLUMN_MIN_CHARS
             },
             [-1]: { // last column
                 minWidth: lastColumnMaxChars,

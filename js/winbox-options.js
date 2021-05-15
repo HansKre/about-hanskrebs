@@ -30,4 +30,8 @@ function winboxOptions(title, mountContentId, onResize) {
     };
 }
 
-export { winboxOptions }
+function updateWinboxSize() {
+    window.winbox?.resize(WINBOX_WIDTH, WINBOX_HEIGHT)
+}
+
+export { winboxOptions, updateWinboxSize }

@@ -1,5 +1,5 @@
 import { renderTable } from './cli-table.js'
-import { winboxOptions } from './winbox-options.js'
+import { updateWinboxSize, winboxOptions } from './winbox-options.js'
 
 import { workExperienceData } from '../content/work-experience.js'
 import { educationData } from '../content/education.js'
@@ -30,7 +30,7 @@ document.querySelector('#contact').addEventListener('click', () => {
 
 window.addEventListener('resize', () => {
   console.log(window.visualViewport.width, window.visualViewport.height)
-  window.winbox?.resize(WINBOX_WIDTH, WINBOX_HEIGHT)
+  updateWinboxSize();
 })
 
 document.querySelector('#portfolio').addEventListener('click', () => {
