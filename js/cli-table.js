@@ -5,7 +5,7 @@ import { PrintLineBuffer } from 'https://unpkg.com/styled-cli-table/module/print
 import { BorderRenderer, PaddingRenderer, AlignRenderer, FlexSizeRenderer, GenericBufferedRenderer } from 'https://unpkg.com/styled-cli-table/module/renderers/index.js';
 import { ComposableRenderedStyledTable } from 'https://unpkg.com/styled-cli-table/module/composable/ComposableRenderedStyledTable.js';
 
-const COLUMN_MIN_CHARS = 10
+const COLUMN_MIN_CHARS = 5
 let columnsCount;
 
 function renderTable(targetId, data) {

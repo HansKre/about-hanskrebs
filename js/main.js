@@ -47,6 +47,5 @@ document.querySelector('#contact').addEventListener('click', () => {
 })
 
 window.addEventListener('resize', () => {
-  console.log(window.visualViewport.width, window.visualViewport.height)
   updateWinboxSize();
 })
