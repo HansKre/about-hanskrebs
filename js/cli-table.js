@@ -6,20 +6,21 @@ import { BorderRenderer, PaddingRenderer, AlignRenderer, FlexSizeRenderer, Gener
 import { ComposableRenderedStyledTable } from 'https://unpkg.com/styled-cli-table/module/composable/ComposableRenderedStyledTable.js';
 
 const COLUMN_MIN_CHARS = 10
+let columnsCount;
 
 function renderTable(targetId, data) {
     const fontSizeStyle = window.getComputedStyle(document.querySelector(targetId), null).fontSize;
     const fontSize = parseFloat(fontSizeStyle)
-    const availableWidthLastCol = window.winbox?.width - (2 * COLUMN_MIN_CHARS * fontSize) || 0
-    const availableMaxChars = (availableWidthLastCol / fontSize).toFixed(0)
-    const lastColumnMaxChars = Math.max(COLUMN_MIN_CHARS, availableMaxChars)
-    console.log('fontsize', fontSize, 'availableMaxChars', lastColumnMaxChars, 'winbox.width', window.winbox?.width, 'ratio', window.winbox?.width / availableMaxChars)
+    const lastColumnMaxChars = () => {
+        const availableWidthLastCol = window.winbox?.width - (columnsCount * COLUMN_MIN_CHARS * fontSize) || 0
+        const availableMaxChars = (availableWidthLastCol / fontSize).toFixed(0)
+        return Math.max(COLUMN_MIN_CHARS, availableMaxChars)
+    }
 
     function PrettyCropRenderer(BufferedRenderer) {
         return class extends BufferedRenderer {
             // extend & override
             fillBlock(buffer, x, y, content, width, height, cell, computedStyles) {
-                // console.log('available height', height, 'req. height', breakLines(content, width).length, 'width', width, 'lastColMaxChars', lastColumnMaxChars)
                 super.fillBlock(buffer, x, y, breakLines(content, width), width, height + 5, cell, computedStyles)
             }
             // extend & override
@@ -43,7 +44,7 @@ function renderTable(targetId, data) {
                     const exceedsLineLength = (cursor + breakAt) >= line.length
                     if (goodBreakPoint) {
                         substring = line.substring(cursor, cursor + breakAt);
-                        if (substring)
+                        if (substring && substring !== '.')
                             newContent.push(substring.trim());
                         cursor += breakAt;
                         breakAt = -1
@@ -51,7 +52,7 @@ function renderTable(targetId, data) {
                         breakAt--;
                         if (breakAt === 0 || goodBreakPoint || exceedsLineLength) {
                             substring = line.substring(cursor, cursor + width);
-                            if (substring)
+                            if (substring && substring !== '.')
                                 newContent.push(substring.trim());
                             cursor += width;
                             breakAt = -1
@@ -103,29 +104,30 @@ function renderTable(targetId, data) {
             // center first row
             if (rowIndex === 0) return { align: 'center' }
 
-            // row height is the number of available lines. We calculate row height dynamically based on content. We only want to change height for work experience and education data, which has 3 columns
-            if (data[rowIndex].length === 3) {
-                const lastRowIndex = data[rowIndex].length - 1
-                const lines = data[rowIndex][lastRowIndex]
-                // actualWidth seems to be lower by 2 than what is set
-                const actualWidth = lastColumnMaxChars - 2
-                // use same function for calculating neededHeight wich is used to break lines
-                const neededHeight = breakLines(lines, actualWidth).length
-                console.log(neededHeight, actualWidth)
-                return { height: neededHeight }
-            }
+            // row height is the number of available lines. We calculate row height dynamically based on content.
+            const lastRowIndex = data[rowIndex].length - 1
+            const lines = data[rowIndex][lastRowIndex]
+            // actualWidth seems to be lower by 2 than what is set
+            const actualWidth = lastColumnMaxChars() - 2
+            // use same function for calculating neededHeight wich is used to break lines
+            const neededHeight = breakLines(lines, actualWidth).length
+            return { height: neededHeight }
         },
-        columns: { // column level styles
-            0: { // first column
-                minWidth: COLUMN_MIN_CHARS
-            },
-            1: {
-                minWidth: COLUMN_MIN_CHARS
-            },
-            [-1]: { // last column
-                minWidth: lastColumnMaxChars,
-                width: lastColumnMaxChars,
-                maxWidth: lastColumnMaxChars,
+        columns({ columnIndex, data }) {
+            columnsCount = data[0].length
+            if (columnIndex === 0) { // first column
+                return { minWidth: COLUMN_MIN_CHARS }
+            }
+            if (columnIndex === 1 && columnsCount > 2) {
+                return { minWidth: COLUMN_MIN_CHARS }
+            }
+            const maxChars = lastColumnMaxChars(columnsCount)
+            if (columnIndex === (columnsCount - 1)) {
+                return {
+                    minWidth: maxChars,
+                    width: maxChars,
+                    maxWidth: maxChars,
+                }
             }
         }
     };
