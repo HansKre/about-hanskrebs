@@ -36,11 +36,29 @@ function renderTable(targetId, data) {
             let substring = '';
             let cursor = 0;
             do {
-                substring = line.substring(cursor, cursor + width);
-                if (substring)
-                    newContent.push(substring.trim());
-                cursor += width;
-            } while (substring);
+                let breakAt = width;
+                do {
+                    const charAfterBreak = line[cursor + breakAt]
+                    const goodBreakPoint = [' ', ',', '.', '!', '?', '-', '&'].includes(charAfterBreak)
+                    const exceedsLineLength = (cursor + breakAt) >= line.length
+                    if (goodBreakPoint) {
+                        substring = line.substring(cursor, cursor + breakAt);
+                        if (substring)
+                            newContent.push(substring.trim());
+                        cursor += breakAt;
+                        breakAt = -1
+                    } else {
+                        breakAt--;
+                        if (breakAt === 0 || goodBreakPoint || exceedsLineLength) {
+                            substring = line.substring(cursor, cursor + width);
+                            if (substring)
+                                newContent.push(substring.trim());
+                            cursor += width;
+                            breakAt = -1
+                        }
+                    }
+                } while (breakAt > 0)
+            } while (substring && cursor <= line.length);
         }
     }
 
