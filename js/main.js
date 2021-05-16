@@ -3,6 +3,13 @@ import { updateWinboxSize, winboxOptions } from './winbox-options.js'
 import { workExperienceData } from '../content/work-experience.js'
 import { educationData } from '../content/education.js'
 import { contactDetailsData } from '../content/contact-details.js'
+import {
+  imdbData,
+  calcData,
+  pomodoroData,
+  immoData,
+  dionysosData
+} from '../content/projects.js'
 
 function closeWinboxOnClickOutside(evt) {
   if (evt?.target?.classList?.contains('winbox') && evt?.target?.classList?.contains('modal')) {
@@ -23,6 +30,16 @@ document.querySelector('#resume').addEventListener('click', () => {
   renderTables()
 })
 
+document.querySelector('#projects').addEventListener('click', () => {
+  let projectsBox = new WinBox(winboxOptions('', '#projects-content'))
+  window.winbox = projectsBox
+  renderTable('#outputDionysos', dionysosData)
+  renderTable('#outputImmo', immoData)
+  renderTable('#outputPomodoro', pomodoroData)
+  renderTable('#outputCalc', calcData)
+  renderTable('#outputImdbprime', imdbData)
+})
+
 document.querySelector('#contact').addEventListener('click', () => {
   let contactBox = new WinBox(winboxOptions('', '#contact-content'))
   window.winbox = contactBox
@@ -32,8 +49,4 @@ document.querySelector('#contact').addEventListener('click', () => {
 window.addEventListener('resize', () => {
   console.log(window.visualViewport.width, window.visualViewport.height)
   updateWinboxSize();
-})
-
-document.querySelector('#portfolio').addEventListener('click', () => {
-  alert('... coming soon')
 })
