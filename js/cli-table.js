@@ -1,4 +1,3 @@
-// import { RenderedStyledTable } from 'https://unpkg.com/styled-cli-table/module/precomposed/RenderedStyledTable.js';
 import { border, borderCharacters } from 'https://unpkg.com/styled-cli-table/module/styles/border.js';
 
 import { PrintLineBuffer } from 'https://unpkg.com/styled-cli-table/module/printline/PrintLineBuffer.js';
@@ -132,7 +131,6 @@ function renderTable(targetId, data) {
         }
     };
 
-    // const table = new RenderedStyledTable(workExperienceData, styles);
     const table = new CustomStyledTable(data, styles);
 
     const outputTarget = document.querySelector(targetId);

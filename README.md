@@ -1,6 +1,6 @@
 # Description
 
-This is the repo for my about-me page which you can checkout here: [www.hanskrebs.me](https://hanskrebs.me)
+This is my about-me page which you can checkout at[www.hanskrebs.me](https://hanskrebs.me)
 
 ## Development
 
@@ -10,7 +10,7 @@ cd about-hanskrebs
 serve -s .
 ```
 
-## Resources 
+## Resources
 
 ### Table-Packages
 
