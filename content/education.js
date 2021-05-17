@@ -4,8 +4,8 @@ const educationData = [
         [
             'Bachelor Degree in Computer Science',
             '',
-            'Part-time bachelor\'s study at the long-distance university of Hagen',
-            'Final degree with a grade point average of 1.2'
+            '° Part-time bachelor\'s study at the long-distance university of Hagen',
+            '° Final degree with a grade point average of 1.2'
         ]
     ],
     ['March 2015', 'until', 'Certified ScrumMaster'],
@@ -13,9 +13,9 @@ const educationData = [
         [
             'Bachelor Degree in Industrial Engineering',
             '',
-            'Full-time bachelor\'s study at the university of applied sciences of Esslingen',
-            'University award for the best final degree of the graduation year',
-            'Final degree with a grade point average of 1.4'
+            '° Full-time bachelor\'s study at the university of applied sciences of Esslingen',
+            '° University award for the best final degree of the graduation year',
+            '° Final degree with a grade point average of 1.4'
         ]
     ]
 ]
