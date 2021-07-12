@@ -1,6 +1,6 @@
 import { renderTable } from './cli-table.js'
 import { updateWinboxSize, winboxOptions } from './winbox-options.js'
-import { workExperienceData } from '../content/work-experience.js'
+import { workExperienceData, downloadUrl } from '../content/work-experience.js'
 import { educationData } from '../content/education.js'
 import { contactDetailsData } from '../content/contact-details.js'
 import {
@@ -21,7 +21,7 @@ function closeWinboxOnClickOutside(evt) {
 window.addEventListener('click', (evt) => closeWinboxOnClickOutside(evt))
 
 const renderTables = () => {
-  renderTable('#outputWorkExp', workExperienceData)
+  renderTable('#outputWorkExp', workExperienceData, downloadUrl)
   renderTable('#outputEdu', educationData)
 }
 

@@ -37,4 +37,6 @@ const workExperienceData = [
     ],
 ];
 
-export { workExperienceData }
+const downloadUrl = '/assets/2_Resume.pdf';
+
+export { workExperienceData, downloadUrl }

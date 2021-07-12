@@ -7,7 +7,7 @@ import { ComposableRenderedStyledTable } from 'https://unpkg.com/styled-cli-tabl
 const COLUMN_MIN_CHARS = 5
 let columnsCount;
 
-function renderTable(targetId, data) {
+function renderTable(targetId, data, downloadUrl) {
     const fontSizeStyle = window.getComputedStyle(document.querySelector(targetId), null).fontSize;
     const fontSize = parseFloat(fontSizeStyle)
     const lastColumnMaxChars = () => {
@@ -142,6 +142,33 @@ function renderTable(targetId, data) {
     }
 
     removeAllChildNodes(outputTarget);
+
+    // add download link for pdf
+    if (downloadUrl) {
+        // div for centering items
+        const div = document.createElement('div');
+        div.style.textAlign = 'center';
+
+        const img = document.createElement('img');
+        img.src = '/assets/pdf-icon.png';
+        img.alt = 'pdf icon';
+        img.title = 'pdf icon';
+        img.style.width = `${fontSize}px`;
+        img.style.marginRight = '12px';
+        div.appendChild(img);
+
+        const a = document.createElement('a');
+        const linkTextStr = 'Download Resume as PDF';
+        const linkText = document.createTextNode(linkTextStr);
+        a.appendChild(linkText);
+        a.title = linkTextStr;
+        a.href = downloadUrl;
+        div.appendChild(a);
+
+        div.appendChild(document.createElement('br'));
+
+        outputTarget.appendChild(div);
+    }
 
     if (table.render().length === 0) return
 
