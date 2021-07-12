@@ -68,10 +68,25 @@ const dionysosData = [
     ['code-repo', 'https://github.com/HansKre/dionysos-stuttgart-v3']
 ]
 
+const sanityPluginHtmlToPortableText = [
+    ['key', 'value'],
+    ['description', 'Sanity (www.sanity.io) is a modern headless CMS. It is super flexible and customizeable. I have written a plugin for sanity-studio which is a custom input component to convert HTML into Portable Text on the fly. This should help people migrating content from their older CMS to sanity.'],
+    ['time of creation', 'June 2021'],
+    ['tech used',
+        [
+            '° sanity-studio',
+            '° React.js',
+            '° Typescript'
+        ]
+    ],
+    ['npm-repo', 'https://www.npmjs.com/package/sanity-plugin-html-to-portable-text']
+]
+
 export {
     imdbData,
     calcData,
     pomodoroData,
     immoData,
-    dionysosData
+    dionysosData,
+    sanityPluginHtmlToPortableText
 }

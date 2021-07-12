@@ -8,7 +8,8 @@ import {
   calcData,
   pomodoroData,
   immoData,
-  dionysosData
+  dionysosData,
+  sanityPluginHtmlToPortableText
 } from '../content/projects.js'
 
 function closeWinboxOnClickOutside(evt) {
@@ -33,6 +34,7 @@ document.querySelector('#resume').addEventListener('click', () => {
 document.querySelector('#projects').addEventListener('click', () => {
   let projectsBox = new WinBox(winboxOptions('', '#projects-content'))
   window.winbox = projectsBox
+  renderTable('#sanityPluginHtmlToPortableText', sanityPluginHtmlToPortableText)
   renderTable('#outputDionysos', dionysosData)
   renderTable('#outputImmo', immoData)
   renderTable('#outputPomodoro', pomodoroData)
