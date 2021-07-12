@@ -163,6 +163,7 @@ function renderTable(targetId, data, downloadUrl) {
         a.appendChild(linkText);
         a.title = linkTextStr;
         a.href = downloadUrl;
+        a.target = '_blank';
         div.appendChild(a);
 
         div.appendChild(document.createElement('br'));
